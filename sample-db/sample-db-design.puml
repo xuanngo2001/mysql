@@ -1,0 +1,40 @@
+@startuml
+' Source: https://gist.github.com/QuantumGhost/0955a45383a0b6c0bc24f9654b3cb561
+' uncomment the line below if you're using computer with a retina display
+' skinparam dpi 300
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+' we use bold for primary key
+' green color for unique
+' and underscore for not_null
+sprite $primary [17x12/16z] bOqv3e1030CJRzPn9Fx_NWY7n4eqJ3TJs6OVa5pTpD-5tl3YyFHG-4DsqAOnWgawWp0r0KGagDuGMYMJxbMrBxzLPJ_O0G00
+!define primary_key(x) <$primary> <b>x</b>
+!define unique(x) <color:green>x</color>
+!define not_null(x) <u>x</u>
+' other tags available:
+' <i></i>
+' <back:COLOR></color>, where color is a color name or html color code
+' (#FFAACC)
+' see: http://plantuml.com/classes.html#More
+hide methods
+hide stereotypes
+
+' entities
+
+Table(contacts, "Contacts") {
+    primary_key(id) INTEGER
+    not_null(FirstName) VARCHAR[50]
+    not_null(LastName) VARCHAR[50]
+}
+
+Table(emails, "Emails") {
+    not_null(Contact_id) INTEGER
+    not_null(Email) VARCHAR[50]
+    not_null(Label) VARCHAR[50]
+}
+
+
+' relationships
+' one-to-one relationship
+contacts "1" -- "*" emails : "A contact may have many emails."
+
+@enduml
